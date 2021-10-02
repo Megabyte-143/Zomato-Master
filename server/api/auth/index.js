@@ -1,11 +1,12 @@
 import express from "express";
+import passport from "passport";
 
 const Router = express.Router();
 
 //==========================Import Models==========================
 
 //User Model
-import {UserModel} from "../../schema/user/index";
+import { UserModel } from "../../schema/user/index";
 
 
 //=================================================================
@@ -23,16 +24,16 @@ import {UserModel} from "../../schema/user/index";
 
 Router.post("/signup", async (req, res) => {
     try {
-        
+
         await UserModel.findByEmailAndPhone(req.body.credentials);
-        
+
         //DB    
-        const newUser =     await UserModel.create(req.body.credentials);
+        const newUser = await UserModel.create(req.body.credentials);
 
         // JWT token
-        const token  = newUser.generateJwtToken();
+        const token = newUser.generateJwtToken();
 
-        return res.status(200).json ({token});
+        return res.status(200).json({ token });
 
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -55,13 +56,13 @@ Router.post("/signup", async (req, res) => {
 Router.post("/signin", async (req, res) => {
     try {
 
-        const  user = await UserModel.findByEmailAndPassword(req.body.credentials);
-        
-        //JWT Token 
-        const token  = user.generateJwtToken();
+        const user = await UserModel.findByEmailAndPassword(req.body.credentials);
 
-        return res.status(200).json({token, status: "Succes"});
-        
+        //JWT Token 
+        const token = user.generateJwtToken();
+
+        return res.status(200).json({ token, status: "Succes" });
+
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -69,5 +70,42 @@ Router.post("/signin", async (req, res) => {
 
 //====================================================================================
 
+
+//===================================== Google SIGN IN ====================================
+
+/*
+    Route           /google
+    Description     Google Sign In 
+    Parameters      None
+    Access          PUBLIC
+    Method          GET
+*/
+
+Router.get("/google", passport.authenticate("google", {
+    scope: [
+        "https://wwww.googleapis.com/auth/userinfo.profile",
+        "https://wwww.googleapis.com/auth/userinfo.email"
+    ],
+})
+);
+
+//====================================================================================
+
+
+//===================================== Google SIGN IN Callback =============================
+
+/*
+    Route           /google/callback
+    Description     Google Sign In 
+    Parameters      None
+    Access          PUBLIC
+    Method          GET
+*/
+
+Router.get("/google/callback", passport.authenticate("google",{failureRedirect:"/",}),(req,res)=>{
+    return res.json ()
+});
+
+//====================================================================================
 
 export default Router;
