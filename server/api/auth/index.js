@@ -102,8 +102,8 @@ Router.get("/google", passport.authenticate("google", {
     Method          GET
 */
 
-Router.get("/google/callback", passport.authenticate("google",{failureRedirect:"/",}),(req,res)=>{
-    return res.json ()
+Router.get("/google/callback", passport.authenticate("google", { failureRedirect: "/", }), (req, res) => {
+    return res.json()
 });
 
 //====================================================================================
