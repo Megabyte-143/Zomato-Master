@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const RestrauntSchema = new mongoose.Schema(
+const RestaurantSchema = new mongoose.Schema(
     {
         name: { type: String, required: true },
         city: { type: String, required: true },
@@ -14,6 +14,10 @@ const RestrauntSchema = new mongoose.Schema(
         averageCost: Number,
         amenities: [String],
         menuImages: {
+            type: mongoose.Types.ObjectId,
+            ref: "Images"
+        },
+        menu: {
             type: mongoose.Types.ObjectId,
             ref: "Menus"
         },
@@ -30,4 +34,4 @@ const RestrauntSchema = new mongoose.Schema(
     }
 );
 
-export const RestrauntModel = mongoose.model("Restraunts", RestrauntSchema);
+export const RestaurantModel = mongoose.model("Restraunts", RestaurantSchema);

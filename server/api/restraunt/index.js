@@ -1,7 +1,7 @@
 import express from "express";
 
 // Restraunt Model Import
-import { RestrauntModel } from "../../schema/db_all_models";
+import {  RestaurantModel } from "../../schema/db_all_models";
 
 const Router = express.Router();
 
@@ -18,7 +18,7 @@ const Router = express.Router();
 Router.get("/", async (req, res) => {
     try {
         const { city } = req.query;
-        const restraunts = await RestrauntModel.find({ city });
+        const restraunts = await RestaurantModel.find({ city });
         return res.json({ restraunts });
     } catch (error) {
         return res.status(500).json({ error: error.message });
@@ -41,7 +41,7 @@ Router.get("/", async (req, res) => {
 Router.get("/:_id", async (req, res) => {
     try {
         const { _id } = req.params;
-        const restraunt = await RestrauntModel.findOne(_id);
+        const restraunt = await RestaurantModel.findOne(_id);
 
         if (!restraunt)
             return res.status(404).json({ error: "Restraunt Not Found" });
@@ -69,7 +69,7 @@ Router.get("/search", async (req, res) => {
     try {
         const { searchString } = req.body;
 
-        const restraunts = await RestrauntModel.find({
+        const restraunts = await RestaurantModel.find({
             name: { $regex: searchString, $options: "i" },
         });
         res.json({ restraunts });
