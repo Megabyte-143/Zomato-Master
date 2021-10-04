@@ -15,7 +15,7 @@ const Router = express.Router();
     Method          GET
 */
 
-Router.get("/", (req, res) => {
+Router.get("/", async (req, res) => {
     try {
         const { city } = req.query;
         const restraunts = await RestrauntModel.find({ city });
@@ -32,20 +32,20 @@ Router.get("/", (req, res) => {
 
 /*
     Route           /
-    Description     get all restraunt details 
+    Description     get particular restraunt details 
     Parameters      _id
     Access          PUBLIC
     Method          GET
 */
 
-Router.get("/:_id", (req, res) => {
+Router.get("/:_id", async (req, res) => {
     try {
         const { _id } = req.params;
         const restraunt = await RestrauntModel.findOne(_id);
 
         if (!restraunt)
             return res.status(404).json({ error: "Restraunt Not Found" });
-        return res.json({ restrauntq });
+        return res.json({ restraunt });
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }
@@ -65,14 +65,14 @@ Router.get("/:_id", (req, res) => {
     Method          GET
 */
 
-Router.get("/search", (req, res) => {
+Router.get("/search", async (req, res) => {
     try {
         const { searchString } = req.body;
 
-        const restraunt = await RestrauntModel.find({
+        const restraunts = await RestrauntModel.find({
             name: { $regex: searchString, $options: "i" },
         });
-
+        res.json({ restraunts });
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }
