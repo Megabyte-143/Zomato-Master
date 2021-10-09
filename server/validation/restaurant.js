@@ -13,7 +13,7 @@ export const ValidateRestaurantCity = (restaurantObj) => {
 export const ValidateRestaurantSearchString = (search) => {
 
     const Schema = joi.object({
-        searchString : joi.string().required(),
+        searchString: joi.string().required(),
     });
 
     return Schema.validateAsync(search);

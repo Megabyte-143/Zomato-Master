@@ -1,8 +1,11 @@
 // Libraries
-
 import express from "express";
 
+// Model Imports
 import { MenuModel, ImageModel } from "../../schema/db_all_models";
+
+// Validation
+import { ValidateId } from "../../validation/menu";
 
 const Router = express.Router();
 
@@ -19,6 +22,7 @@ const Router = express.Router();
 Router.get("/ml/:_id", async (req, res) => {
 
     try {
+        await ValidateId(req.params);
         const { _id } = req.params;
         const menus = await MenuModel.findOne(_id);
 
@@ -45,6 +49,7 @@ Router.get("/ml/:_id", async (req, res) => {
 Router.get("/image/:_id", async (req, res) => {
 
     try {
+        await ValidateId(req.params);
         const { _id } = req.params;
         const menuImage = await ImageModel.findOne(_id);
 
