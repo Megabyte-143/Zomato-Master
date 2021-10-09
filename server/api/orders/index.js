@@ -1,6 +1,10 @@
 import express from "express";
 
+// Model Imports
 import { OrderModel } from "../../schema/db_all_models";
+
+// Validation
+import { ValidateId } from "../../validation/menu";
 
 const Router = express.Router();
 
@@ -18,6 +22,7 @@ const Router = express.Router();
 Router.get("/:_id", async (req, res) => {
 
     try {
+        await ValidateId(req.params);
         const { _id } = req.params;
         const getOrders = OrderModel.findOne({ user: _id });
         if (!getOrders) {
@@ -46,6 +51,7 @@ Router.get("/:_id", async (req, res) => {
 Router.post("/new", async (req, res) => {
 
     try {
+        await ValidateId(req.params);
         const { _id } = req.params;
         const { orderDetails } = req.body;
         const addNewOrder = await OrderModel.findOneAndUpdate(
@@ -59,7 +65,6 @@ Router.post("/new", async (req, res) => {
                 new: true
             }
         );
-
         return res.json({ order: addNewOrder });
     } catch (error) {
         return res.status(500).json({ error: error.message });
