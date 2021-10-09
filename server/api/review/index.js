@@ -2,6 +2,10 @@ import express from "express";
 
 import { ReviewModel } from "../../schema/db_all_models";
 
+//Validation
+import { ValidateId } from "../../validation/menu";
+import { ValidateReviewBody } from "../../validation/review";
+
 const Router = express.Router();
 
 //================================= Add new Review ===================================
@@ -18,6 +22,7 @@ const Router = express.Router();
 Router.post("/new", async (req, res) => {
 
     try {
+        await ValidateReviewBody(req.body);
         const { reviewData } = req.body;
         await ReviewModel.create(reviewData);
         return res.json({ review: "Successfully Created Review" });
@@ -44,6 +49,7 @@ Router.post("/new", async (req, res) => {
 Router.delete("/delete/:_id", async (req, res) => {
 
     try {
+        await ValidateId(req.params);
         const { _id } = req.params;
         await ReviewModel.findByIdAndDelete(_id);
         return res.json({ review: "Review Successfully Deleted" });
