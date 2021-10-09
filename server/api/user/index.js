@@ -2,6 +2,9 @@ import express from "express";
 
 import { UserModel } from "../../schema/db_all_models";
 
+// Validation
+import { ValidateId } from "../../validation/menu";
+
 const Router = express.Router();
 
 
@@ -20,6 +23,7 @@ const Router = express.Router();
 Router.get("/", async (req, res) => {
 
     try {
+        await ValidateId(req.params);
         const { _id } = req.params;
         const getUser = await UserModel.findById(_id);
         return res.json({ user: getUser });
@@ -46,6 +50,7 @@ Router.get("/", async (req, res) => {
 Router.get("/update/:_userId", async (req, res) => {
 
     try {
+        await ValidateId(req.params);
         const { userId } = req.params;
         const { userData } = req.body;
         const updateUserData = await UserModel.findByIdAndUpdate(
