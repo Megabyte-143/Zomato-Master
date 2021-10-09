@@ -8,6 +8,9 @@ const Router = express.Router();
 //User Model
 import { UserModel } from "../../schema/user/index";
 
+// Validation
+import { ValidateSignUp, ValidateSignIn } from "../../validation/auth";
+
 
 //=================================================================
 
@@ -23,7 +26,10 @@ import { UserModel } from "../../schema/user/index";
 */
 
 Router.post("/signup", async (req, res) => {
+
     try {
+
+        await ValidateSignUp(req.body.credentials);
 
         await UserModel.findByEmailAndPhone(req.body.credentials);
 
@@ -54,7 +60,10 @@ Router.post("/signup", async (req, res) => {
 */
 
 Router.post("/signin", async (req, res) => {
+
     try {
+
+        await ValidateSignIn(req.body.credentials);
 
         const user = await UserModel.findByEmailAndPassword(req.body.credentials);
 
