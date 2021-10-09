@@ -1,20 +1,20 @@
-import React, {Component, component} from "react";
-import {Route} from "react-router-dom";
+import React, { Component } from "react";
+import { Route } from "react-router-dom";
 
 //Layout
 import HomeLayout from "../Layout/home_layout";
 
-const HomeLayoutHoc = ({component: Component, ...rest}) =>{
+const HomeLayoutHoc = ({ component: Component, ...rest }) => {
     return (
         <>
-        <Route
-        {...rest}
-        component = {(props)=>(
-            <HomeLayout>
-                <Component {...rest}/>
-            </HomeLayout>
-        )}
-        /> 
+            <Route
+                {...rest}
+                component={(props) => (
+                    <HomeLayout>
+                        <Component {...rest} />
+                    </HomeLayout>
+                )}
+            />
         </>
     );
 }

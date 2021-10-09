@@ -7,3 +7,5 @@ const Temp = ()=>{
         </div>
     );
 }
+
+export default Temp;
