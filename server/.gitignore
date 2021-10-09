@@ -3,3 +3,5 @@
 package-lock.json   
 
 .env
+
+/new_user_credentials.csv
