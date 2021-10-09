@@ -1,7 +1,11 @@
 import express from "express";
 
 // Restraunt Model Import
-import {  RestaurantModel } from "../../schema/db_all_models";
+import { RestaurantModel } from "../../schema/db_all_models";
+
+//Validation
+import { ValidateRestaurantCity, ValidateRestaurantSearchString } from "../../validation/restaurant";
+import { ValidateRestaurantId } from "../../validation/food";
 
 const Router = express.Router();
 
@@ -17,6 +21,7 @@ const Router = express.Router();
 
 Router.get("/", async (req, res) => {
     try {
+        await ValidateRestaurantCity(req.query);
         const { city } = req.query;
         const restraunts = await RestaurantModel.find({ city });
         return res.json({ restraunts });
@@ -40,6 +45,7 @@ Router.get("/", async (req, res) => {
 
 Router.get("/:_id", async (req, res) => {
     try {
+        await ValidateRestaurantId(req.params);
         const { _id } = req.params;
         const restraunt = await RestaurantModel.findOne(_id);
 
@@ -67,8 +73,8 @@ Router.get("/:_id", async (req, res) => {
 
 Router.get("/search", async (req, res) => {
     try {
+        await ValidateRestaurantSearchString(req.body);
         const { searchString } = req.body;
-
         const restraunts = await RestaurantModel.find({
             name: { $regex: searchString, $options: "i" },
         });
