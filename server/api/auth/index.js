@@ -1,5 +1,5 @@
 import express from "express";
-// import passport from "passport";
+import passport from "passport";
 
 const Router = express.Router();
 
@@ -80,41 +80,41 @@ Router.post("/signin", async (req, res) => {
 //====================================================================================
 
 
-// //===================================== Google SIGN IN ====================================
+//===================================== Google SIGN IN ====================================
 
-// /*
-//     Route           /google
-//     Description     Google Sign In 
-//     Parameters      None
-//     Access          PUBLIC
-//     Method          GET
-// */
+/*
+    Route           /google
+    Description     Google Sign In 
+    Parameters      None
+    Access          PUBLIC
+    Method          GET
+*/
 
-// Router.get("/google", passport.authenticate("google", {
-//     scope: [
-//         "https://wwww.googleapis.com/auth/userinfo.profile",
-//         "https://wwww.googleapis.com/auth/userinfo.email"
-//     ],
-// })
-// );
+Router.get("/google", passport.authenticate("google", {
+    scope: [
+        "https://www.googleapis.com/auth/userinfo.profile",
+        "https://www.googleapis.com/auth/userinfo.email"
+      ],
+})
+);
 
-// //====================================================================================
+//====================================================================================
 
 
-// //===================================== Google SIGN IN Callback =============================
+//===================================== Google SIGN IN Callback =============================
 
-// /*
-//     Route           /google/callback
-//     Description     Google Sign In 
-//     Parameters      None
-//     Access          PUBLIC
-//     Method          GET
-// */
+/*
+    Route           /google/callback
+    Description     Google Sign In 
+    Parameters      None
+    Access          PUBLIC
+    Method          GET
+*/
 
-// Router.get("/google/callback", passport.authenticate("google", { failureRedirect: "/", }), (req, res) => {
-//     return res.json()
-// });
+Router.get("/google/callback", passport.authenticate("google", { failureRedirect: "/", }), (req, res) => {
+    return res.json()
+});
 
-// //====================================================================================
+//====================================================================================
 
 export default Router;
