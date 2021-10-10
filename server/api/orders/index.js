@@ -25,7 +25,7 @@ Router.get("/:_id", passport.authenticate("jwt", { session: false  }), async (re
     try {
         await ValidateId(req.params);
         const { _id } = req.params;
-        const getOrders = OrderModel.findOne({ user: _id });
+        const getOrders = await OrderModel.findOne({ user: _id });
         if (!getOrders) {
             return res.status(400).json({ error: "User not Found" });
         }
