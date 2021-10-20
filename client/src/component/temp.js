@@ -1,6 +1,6 @@
 import React from "react";
 
-const Temp = ()=>{
+const Temp = () => {
     return (
         <div>
             Hello WOrld
