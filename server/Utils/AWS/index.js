@@ -1,10 +1,11 @@
-import AWS from "aws-sdk";
+require("dotenv").config();
 
+import AWS from "aws-sdk";
 
 //AWS S3 config
 const s3Buket = new AWS.S3({
-    accessKeyId: "AKIA6FFOC2W6R5XWR372",
-    secretAccessKey: "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",
+    accessKeyId: process.env.AWS_S3_ACCESS_KEY,
+    secretAccessKey: process.env.AWS_S3_SECRET_KEY,
     region: "ap-south-1"
 })
 
